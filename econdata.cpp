@@ -168,9 +168,30 @@ int display_choices(struct state* state_array, int n){
 			return 0;
 		}
 		case 5:
+		{
+			cout << "States sorted in order by change in ";
+			cout << "unemployment from 2007 to 2015:" << endl;
+			struct state* target_state= sort_state_unemployment_change(state_array,n);
+			for(int i = 0; i < n; i++){
+			cout << target_state[i].name << " with " << target_state[i].unemployed_2015;
+			cout << " percent." << endl;
+			}
+			
 			return 0;
+		}
+		
 		case 6:
+		{
+			cout << "States sorted in order by median household income: ";
+			cout << endl;
+			struct state* target_state= sort_state_income(state_array,n);
+			for(int i = 0; i < n; i++){
+			cout << target_state[i].name << " with " << target_state[i].med_income;
+			cout << " dollars." << endl;
+			}
+			
 			return 0;
+		}
 		case 7:
 			if(display_choices_states(state_array,n) == 0) {
 				return 0;
@@ -322,7 +343,7 @@ struct state* seek_state_lowest_income(struct state* state_array,int n){
 }
 
 struct state* seek_state_highest_unemployment(struct state* state_array,int n){
-	int highest = 0;
+	float highest = 0;
 	int index_highest = 0;
 	for(int i = 0; i < n; i++){
 		if(highest < state_array[i].unemployed_2015){
@@ -333,7 +354,7 @@ struct state* seek_state_highest_unemployment(struct state* state_array,int n){
 	return &state_array[index_highest];
 }
 struct state* seek_state_lowest_unemployment(struct state* state_array,int n){
-	int lowest = 9999999;
+	float lowest = 9999999;
 	int index_lowest = 0;
 	for(int i = 0; i < n; i++){
 		if(lowest > state_array[i].unemployed_2015){
@@ -370,7 +391,7 @@ struct county* seek_county_lowest_income(struct county* county_array,int n){
 }
 
 struct county* seek_county_highest_unemployment(struct county* county_array,int n){
-	int highest = 0;
+	float highest = 0;
 	int index_highest = 0;
 	for(int i = 0; i < n; i++){
 		if(highest < county_array[i].unemployed_2015){
@@ -381,7 +402,7 @@ struct county* seek_county_highest_unemployment(struct county* county_array,int 
 	return &county_array[index_highest];
 }
 struct county* seek_county_lowest_unemployment(struct county* county_array,int n){
-	int lowest = 9999999;
+	float lowest = 9999999;
 	int index_lowest = 0;
 	for(int i = 0; i < n; i++){
 		if(lowest > county_array[i].unemployed_2015){
@@ -393,61 +414,47 @@ struct county* seek_county_lowest_unemployment(struct county* county_array,int n
 }
 
 
-struct state* sort_state_unemployment_change(struct state* state_array, int n);
-struct state* sort_state_income_change(struct state* state_array, int n);
-
-struct county* sort_county_unemployment_change(struct county* county_array, int n);
-struct county* sort_county_income_change(struct county* county_array, int n);
-
-
-bool sort_function_state_unemployment_change(struct state* state_array, int n);
-bool sort_function_state_income_change(struct state* state_array, int n);
-
-bool sort_function_county_unemployment_change(struct county* county_array, int n);
-bool sort_function_county_income_change(struct county* county_array, int n);
-
-
-//struct muldiv_entry {
-//	int mul;
-//	float div;
-
-
-//};
-
-//struct muldiv_entry** generate_tables(int n){
-
-
-
-
-//}
-
-
-
-/*
-	struct car **c;
-	c = new struct car *[5];
-	for(int i=0; i <5; i++){
-		c[i] = new struct car [5];
-	}
-	for(int i = 0; i< 5; i++){
-		for(int j = 0; j<5; j++){
-			c[i][j].wheels = 4;
-		}
-	}
-	for(int i = 0; i < 5;i++){
-		delete [] c[i];
-	}
-	delete c[];
-*/
+struct state* sort_state_unemployment_change(struct state* state_array, int n){
 	
+	struct state* states_copy = new struct state[n];
+	std::copy(state_array, &state_array[n], states_copy);
+	
+	std::sort(states_copy, &states_copy[n], [] (const state& a, const state& b) {
+		float change_1 = a.unemployed_2015 - a.unemployed_2007;
+		float change_2 = b.unemployed_2015 - b.unemployed_2007;
+		return (change_1 < change_2);
+	});
+	
+	return states_copy;
+}
 
-//int main(int argc, char *argv[]){
+struct state* sort_state_income(struct state* state_array, int n){
+	
+	
+	struct state* states_copy = new struct state[n];
+	std::copy(state_array, &state_array[n], states_copy);
+	
+	std::sort(states_copy, &states_copy[n], [] (const state& a, const state& b) {
+		return (a.med_income < b.med_income);
+	});
+	
+	return states_copy;
+}
 
-//	cout << (argc) << endl;
-//	return 0;
 
 
 
-
-
-//}
+struct county* sort_county_unemployment_change(struct county* county_array, int n){
+	
+	struct county* counties_copy = new struct county[n];
+	std::copy(county_array, &county_array[n], counties_copy);
+	
+	std::sort(counties_copy, &counties_copy[n], [] (const county& a, const county& b) {
+		float change_1 = a.unemployed_2015 - a.unemployed_2007;
+		float change_2 = b.unemployed_2015 - b.unemployed_2007;
+		return (change_1 < change_2);
+	});
+	
+	return counties_copy;
+}
+struct county* sort_county_income(struct county* county_array, int n);

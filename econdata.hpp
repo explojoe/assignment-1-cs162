@@ -50,14 +50,14 @@ struct county* seek_county_lowest_unemployment(struct county*,int);
 
 
 struct state* sort_state_unemployment_change(struct state*, int);
-struct state* sort_state_income_change(struct state*, int);
+struct state* sort_state_income(struct state*, int);
 
 struct county* sort_county_unemployment_change(struct county*, int);
-struct county* sort_county_income_change(struct county*, int);
+struct county* sort_county_income(struct county*, int);
 
 
-bool sort_function_state_unemployment_change(struct state*, int);
-bool sort_function_state_income_change(struct state*, int);
+bool sort_function_state_unemployment_change(struct state&,struct state&);
+bool sort_function_state_income(struct state*, int);
 
 bool sort_function_county_unemployment_change(struct county*, int);
-bool sort_function_county_income_change(struct county*, int);
+bool sort_function_county_income(struct county*, int);
