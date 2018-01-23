@@ -174,6 +174,7 @@ int display_choices(struct state* state_array, int n){
 			struct state* target_state= sort_state_unemployment_change(state_array,n);
 			for(int i = 0; i < n; i++){
 			cout << target_state[i].name << " with " << target_state[i].unemployed_2015;
+			delete []target_state;
 			cout << " percent." << endl;
 			}
 			
@@ -188,6 +189,7 @@ int display_choices(struct state* state_array, int n){
 			for(int i = 0; i < n; i++){
 			cout << target_state[i].name << " with " << target_state[i].med_income;
 			cout << " dollars." << endl;
+			delete []target_state;
 			}
 			
 			return 0;
@@ -258,10 +260,10 @@ int display_choices_specific(struct county* county_array, int n, string state_na
 	cout << "enter '3'." << endl;
 	cout << "To print the county with the lowest unemployment in 2015, ";
 	cout << "enter '4'." << endl;
-	cout << "To print the states sorted in order by change in ";
+	cout << "To print the counties sorted in order by change in ";
 	cout << "unemployment from 2007 to 2015 (largest decrease to largest increase), ";
 	cout << "enter '5'." << endl;
-	cout << "To print the states sorted in order based on median household income, ";
+	cout << "To print the counties sorted in order based on median household income, ";
 	cout << "enter '6'." << endl;
 	
 	int choice;
@@ -307,9 +309,31 @@ int display_choices_specific(struct county* county_array, int n, string state_na
 			return 0;
 		}
 		case 5:
+		{
+			cout << "Counties sorted in order by change in ";
+			cout << "unemployment from 2007 to 2015:" << endl;
+			struct county* target_county= sort_county_unemployment_change(county_array,n);
+			for(int i = 0; i < n; i++){
+			cout << target_county[i].name << " with " << target_county[i].unemployed_2015;
+			cout << " percent." << endl;
+			}
+			delete []target_county;
+			
 			return 0;
+		}
 		case 6:
+		{
+			cout << "Counties sorted in order by median household income: ";
+			cout << endl;
+			struct county* target_county= sort_county_income(county_array,n);
+			for(int i = 0; i < n; i++){
+			cout << target_county[i].name << " with " << target_county[i].med_income;
+			cout << " dollars." << endl;
+			}
+			delete []target_county;
+			
 			return 0;
+		}
 		default:
 			return 2;
 			
@@ -457,4 +481,17 @@ struct county* sort_county_unemployment_change(struct county* county_array, int 
 	
 	return counties_copy;
 }
-struct county* sort_county_income(struct county* county_array, int n);
+
+struct county* sort_county_income(struct county* county_array, int n){
+	
+	
+	struct county* counties_copy = new struct county[n];
+	std::copy(county_array, &county_array[n], counties_copy);
+	
+	std::sort(counties_copy, &counties_copy[n], [] (const county& a, const county& b) {
+		return (a.med_income < b.med_income);
+	});
+	
+	return counties_copy;
+}
+

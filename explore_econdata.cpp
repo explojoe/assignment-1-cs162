@@ -29,11 +29,17 @@ int main(int argc, char *argv[]){
 			input_file >> number_of_states;
 			struct state* state_array = allocate_states(number_of_states);
 			read_state_data(state_array,number_of_states,input_file);
-			//while(true){
-				display_choices(state_array,number_of_states);
+			while(true){
+				if(display_choices(state_array,number_of_states) == 0){
+				
+				}
+				else
+				{
+					break;
+				}
 
 
-			//}			
+			}			
 				
 			
 			input_file.close();
@@ -63,47 +69,3 @@ int main(int argc, char *argv[]){
 	
 	return 0;
 }
-/*
-struct muldiv_entry** generate_tables(int n){
-	struct muldiv_entry **c;
-	c = new struct muldiv_entry *[n];
-	for(int i=0; i <n; i++){
-		c[i] = new struct muldiv_entry [n];
-	}
-	for(int i = 0; i< n; i++){
-		for(int j = 0; j<n; j++){
-			c[i][j].mul = (i+1)*(j+1);
-			c[i][j].div = (float)(i+1)/(float)(j+1);
-		}
-	}
-	return c;
-}
-
-void print_tables(struct muldiv_entry** tables, int n){
-	cout << endl << "Multiplication Table:" << endl << endl;
-	for(int i = 0; i < n; i++){
-		for(int j=0; j < n; j++){
-			cout << tables[i][j].mul << "   ";
-		}
-		cout << endl;
-	}
-	cout << endl << "Division Table:" << endl << endl;
-	for(int i=0; i< n; i++){
-		for(int j=0;j<n;j++){
-			//cout << tables[i][j].div << "   ";
-			printf("%.2f  " , tables[i][j].div);
-		}
-		cout << endl;
-	}
-	return;
-}
-
-void free_tables(struct muldiv_entry** tables, int n){
-	for(int i = 0; i < n;i++){
-		delete [] tables[i];
-	}
-	//for(int i = 0; i < n; i++){
-	delete [] tables;
-	//}
-}
-*/
