@@ -29,6 +29,7 @@ int main(int argc, char *argv[]){
 			input_file >> number_of_states;
 			struct state* state_array = allocate_states(number_of_states);
 			read_state_data(state_array,number_of_states,input_file);
+			cout << "\033[2J";	// clear the screen
 			while(true){
 				if(display_choices(state_array,number_of_states) == 0){
 				

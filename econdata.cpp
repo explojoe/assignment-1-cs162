@@ -42,10 +42,6 @@ void read_state_data(struct state* state_array, int n, std::ifstream& input_file
 			>> state_array[i].unemployed_2015
 			>> state_array[i].med_income
 			>> state_array[i].n_counties;
-		
-		cout << endl;
-		cout << state_array[i].name << state_array[i].unemployed_2007 << state_array[i].med_income << state_array[i].n_counties << endl << endl;
-		
 		state_array[i].counties = allocate_counties(state_array[i].n_counties);
 		read_county_data(state_array[i].counties,state_array[i].n_counties,input_file);
 
@@ -79,8 +75,6 @@ void read_county_data(struct county* county_array, int n, std::ifstream& input_f
 			>> county_array[i].unemployed_2007
 			>> county_array[i].unemployed_2015
 			>> county_array[i].med_income;
-		
-			cout << county_array[i].name << county_array[i].unemployed_2007 << county_array[i].med_income << endl;
 	}
 }
 
@@ -110,7 +104,7 @@ void free_state_data(struct state* state_array, int n){
 ** Post-Conditions:
 *********************************************************************/ 
 int display_choices(struct state* state_array, int n){
-	cout << "\033[2J";	// clear the screen
+	//cout << "\033[2J";	// clear the screen
 	cout << "To quit the program, enter '0'." << endl;
 	cout << "To print the state with the highest median household income, ";
 	cout << "enter '1'." << endl;
@@ -219,7 +213,7 @@ int display_choices(struct state* state_array, int n){
 ** Post-Conditions:
 *********************************************************************/ 
 int display_choices_states(struct state* state_array, int n){
-	cout << "\033[2J";	// clear the screen
+	//cout << "\033[2J";	// clear the screen
 	cout << "To quit the program, enter '0'." << endl;
 	for(int i = 0; i < n; i++){
 		cout << "To select " << state_array[i].name << ", enter '" << i+1 << "'."<< endl;
@@ -249,7 +243,7 @@ int display_choices_states(struct state* state_array, int n){
 ** Post-Conditions:
 *********************************************************************/ 
 int display_choices_specific(struct county* county_array, int n, string state_name){
-	cout << "\033[2J";	// clear the screen
+	//cout << "\033[2J";	// clear the screen
 	cout << "With the state of " << state_name << " in mind..." << endl;
 	cout << "To quit the program, enter '0'." << endl;
 	cout << "To print the county with the highest median household income, ";
